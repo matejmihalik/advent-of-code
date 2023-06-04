@@ -1,0 +1,8 @@
+# IDE files
+.idea
+
+# Lock files
+pnpm-lock.yaml
+
+# Dependency directories
+node_modules

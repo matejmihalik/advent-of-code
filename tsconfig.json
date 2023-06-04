@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "allowImportingTsExtensions": true,
+    "baseUrl": ".",
+    "esModuleInterop": true,
+    "incremental": true,
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "noEmit": true,
+    "noImplicitAny": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "ESNext",
+    "tsBuildInfoFile": "node_modules/.cache/.tsbuildinfo",
+  },
+  "exclude": ["node_modules"],
+}
