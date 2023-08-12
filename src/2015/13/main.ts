@@ -89,6 +89,6 @@ export function partOne(): number {
 }
 
 export function partTwo(): number {
-    const seatingArrangements = getAllPossibleSeatingArrangements([...ALL_ATTENDEES, 'Myself']);
+    const seatingArrangements = getAllPossibleSeatingArrangements([...ALL_ATTENDEES, 'Me']);
     return findBestSeatingArrangement(seatingArrangements);
 }

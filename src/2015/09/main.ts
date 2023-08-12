@@ -8,6 +8,8 @@ const routes = inputReader.readAsLines();
 
 type DistanceMap = Map<string, Map<string, number>>;
 
+type FitnessFunction = (distance?: number) => number;
+
 function setDistanceToMap(
     map: DistanceMap,
     startLocation: string,
@@ -44,7 +46,7 @@ const DISTANCE_MAP = routes.reduce<DistanceMap>((distanceMap, route) => {
 const ALL_LOCATIONS = Array.from(DISTANCE_MAP.keys());
 
 function getBestDistanceBetweenLocations(
-    fitnessFunction: (distance?: number) => number,
+    fitnessFunction: FitnessFunction,
     locations: string[],
     startingLocation?: string,
 ): number | undefined {
@@ -75,9 +77,11 @@ function getBestDistanceBetweenLocations(
 }
 
 export function partOne() {
-    return getBestDistanceBetweenLocations((distance) => -(distance ?? Infinity), ALL_LOCATIONS);
+    const fitnessFunction: FitnessFunction = (distance) => -(distance ?? Infinity);
+    return getBestDistanceBetweenLocations(fitnessFunction, ALL_LOCATIONS);
 }
 
 export function partTwo() {
-    return getBestDistanceBetweenLocations((distance) => distance ?? 0, ALL_LOCATIONS);
+    const fitnessFunction: FitnessFunction = (distance) => distance ?? 0;
+    return getBestDistanceBetweenLocations(fitnessFunction, ALL_LOCATIONS);
 }

@@ -55,5 +55,6 @@ export function partOne(): number {
 }
 
 export function partTwo(): number {
-    return sumLedgerNumbers(ledger, 'red');
+    const ignoreKeyword = 'red';
+    return sumLedgerNumbers(ledger, ignoreKeyword);
 }

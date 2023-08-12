@@ -57,9 +57,10 @@ function race(
 }
 
 export function partOne(): number {
-    return Math.max(
-        ...Array.from(REINDEER_STATS.values()).map((reindeer) => race(reindeer, RACE_DURATION)),
+    const finalStandings = Array.from(REINDEER_STATS.values()).map((reindeer) =>
+        race(reindeer, RACE_DURATION),
     );
+    return Math.max(...finalStandings);
 }
 
 function createScoreboard(getDefaultScore?: (reindeer: ReindeerStats) => number): Scoreboard {
@@ -82,19 +83,23 @@ function getLeadingReindeers(standings: Scoreboard): string[] {
     );
 }
 
+function scoreReindeers(scoreboard: Scoreboard, secondsElapsed: number) {
+    const currentStandings = createScoreboard((reindeerStats) =>
+        race(reindeerStats, secondsElapsed),
+    );
+
+    const leadingReindeers = getLeadingReindeers(currentStandings);
+
+    leadingReindeers.forEach((reindeer) =>
+        scoreboard.set(reindeer, (scoreboard.get(reindeer) ?? 0) + 1),
+    );
+}
+
 export function partTwo(): number {
     const scoreboard = createScoreboard();
 
     for (let secondsElapsed = 1; secondsElapsed <= RACE_DURATION; secondsElapsed++) {
-        const currentStandings = createScoreboard((reindeerStats) =>
-            race(reindeerStats, secondsElapsed),
-        );
-
-        const leadingReindeers = getLeadingReindeers(currentStandings);
-
-        leadingReindeers.forEach((reindeer) =>
-            scoreboard.set(reindeer, (scoreboard.get(reindeer) ?? 0) + 1),
-        );
+        scoreReindeers(scoreboard, secondsElapsed);
     }
 
     return Math.max(...Array.from(scoreboard.values()));

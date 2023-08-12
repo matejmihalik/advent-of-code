@@ -26,9 +26,11 @@ function findDecimalComponentForHashWithPrefix(hashPrefix: string): number {
 }
 
 export function partOne(): number {
-    return findDecimalComponentForHashWithPrefix('00000');
+    const targetPrefix = '00000';
+    return findDecimalComponentForHashWithPrefix(targetPrefix);
 }
 
 export function partTwo(): number {
-    return findDecimalComponentForHashWithPrefix('000000');
+    const targetPrefix = '000000';
+    return findDecimalComponentForHashWithPrefix(targetPrefix);
 }

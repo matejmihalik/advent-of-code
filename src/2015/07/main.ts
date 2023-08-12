@@ -83,10 +83,14 @@ function traceWire(circuit: Circuit, wire: string): number {
     return evaluateSignal(circuit, signal);
 }
 
+function followInstructions(circuit: Circuit): void {
+    instructions.forEach((instruction) => connectWire(circuit, instruction));
+}
+
 export function partOne(): number {
     const circuit = createCircuit();
 
-    instructions.forEach((instruction) => connectWire(circuit, instruction));
+    followInstructions(circuit);
 
     return traceWire(circuit, OUTPUT_WIRE);
 }
@@ -96,7 +100,7 @@ export function partTwo(): number {
     const circuit = createCircuit();
     const originalOutputSignal = partOne();
 
-    instructions.forEach((instruction) => connectWire(circuit, instruction));
+    followInstructions(circuit);
     connectWire(circuit, `${originalOutputSignal} -> ${overriddenWire}`);
 
     return traceWire(circuit, OUTPUT_WIRE);

@@ -97,15 +97,11 @@ export function partOne(): number {
     return findHighestCookieScore(recipes);
 }
 
-function calculateCalorieContent(recipe: Recipe, calorieTarget: number): boolean {
-    const calorieContent = calculateCookiePropertyScore(recipe, CALORIE_PROPERTY);
-    return calorieContent === calorieTarget;
-}
-
 export function partTwo(): number {
+    const calorieTarget = 500;
     const recipes = getAllPossibleRecipes(ALL_INGREDIENTS, INGREDIENT_LIMIT);
-    const calorieConsciousRecipes = recipes.filter((recipe) =>
-        calculateCalorieContent(recipe, 500),
+    const calorieConsciousRecipes = recipes.filter(
+        (recipe) => calculateCookiePropertyScore(recipe, CALORIE_PROPERTY) === calorieTarget,
     );
 
     return findHighestCookieScore(calorieConsciousRecipes);

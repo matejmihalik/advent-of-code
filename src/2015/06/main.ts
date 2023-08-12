@@ -8,6 +8,8 @@ const instructions = inputReader.readAsLines();
 
 type LightGrid = number[][];
 
+type SwitchOperation = (bulbBrightness: number, operation: string) => number;
+
 const LIGHT_STATE_ON = 1;
 const LIGHT_STATE_OFF = 0;
 const TURN_ON_OPERATION = 'turn on';
@@ -17,6 +19,32 @@ const GRID_SIZE = 1000;
 
 function createGrid(): LightGrid {
     return Array.from(Array(GRID_SIZE), () => Array(GRID_SIZE).fill(LIGHT_STATE_OFF));
+}
+
+function switchLights(
+    grid: LightGrid,
+    instruction: string,
+    switchOperation: SwitchOperation,
+): void {
+    const match = instruction.match(
+        /^(?<operation>.*) (?<startRow>\d+),(?<startColumn>\d+) through (?<endRow>\d+),(?<endColumn>\d+)$/,
+    );
+
+    if (!match) {
+        return;
+    }
+
+    const { groups: { operation, startRow, startColumn, endRow, endColumn } = {} } = match;
+
+    for (let row = Number(startRow); row <= Number(endRow); row++) {
+        for (let column = Number(startColumn); column <= Number(endColumn); column++) {
+            grid[row][column] = switchOperation(grid[row][column], operation);
+        }
+    }
+}
+
+function followInstructions(grid: LightGrid, switchOperation: SwitchOperation): void {
+    instructions.forEach((instruction) => switchLights(grid, instruction, switchOperation));
 }
 
 function countGridBrightness(grid: LightGrid): number {
@@ -31,48 +59,26 @@ function countGridBrightness(grid: LightGrid): number {
     );
 }
 
-function switchLights(
-    grid: LightGrid,
-    instruction: string,
-    switchOperation: (bulbBrightness: number, operation: string) => number,
-): void {
-    const match = instruction.match(
-        /^(?<operation>.*) (?<startX>\d+),(?<startY>\d+) through (?<endX>\d+),(?<endY>\d+)$/,
-    );
-
-    if (!match) {
-        return;
-    }
-
-    const { groups: { operation, startX, startY, endX, endY } = {} } = match;
-
-    for (let x = Number(startX); x <= Number(endX); x++) {
-        for (let y = Number(startY); y <= Number(endY); y++) {
-            grid[x][y] = switchOperation(grid[x][y], operation);
-        }
-    }
-}
-
 export function partOne(): number {
     const grid = createGrid();
 
-    instructions.forEach((instruction) =>
-        switchLights(grid, instruction, (bulbState, operation) => {
-            if (operation === TURN_ON_OPERATION) {
-                return LIGHT_STATE_ON;
-            }
+    const switchOperation: SwitchOperation = (bulbState, operation) => {
+        if (operation === TURN_ON_OPERATION) {
+            return LIGHT_STATE_ON;
+        }
 
-            if (operation === TURN_OFF_OPERATION) {
-                return LIGHT_STATE_OFF;
-            }
+        if (operation === TURN_OFF_OPERATION) {
+            return LIGHT_STATE_OFF;
+        }
 
-            if (operation === TOGGLE_OPERATION) {
-                return Number(!bulbState);
-            }
+        if (operation === TOGGLE_OPERATION) {
+            return Number(!bulbState);
+        }
 
-            return bulbState;
-        }),
-    );
+        return bulbState;
+    };
+
+    followInstructions(grid, switchOperation);
 
     return countGridBrightness(grid);
 }
@@ -80,23 +86,23 @@ export function partOne(): number {
 export function partTwo(): number {
     const grid = createGrid();
 
-    instructions.forEach((instruction) =>
-        switchLights(grid, instruction, (bulbBrightness, operation) => {
-            if (operation === TURN_ON_OPERATION) {
-                return bulbBrightness + 1;
-            }
+    const switchOperation: SwitchOperation = (bulbBrightness, operation) => {
+        if (operation === TURN_ON_OPERATION) {
+            return bulbBrightness + 1;
+        }
 
-            if (operation === TURN_OFF_OPERATION) {
-                return Math.max(bulbBrightness - 1, 0);
-            }
+        if (operation === TURN_OFF_OPERATION) {
+            return Math.max(bulbBrightness - 1, 0);
+        }
 
-            if (operation === TOGGLE_OPERATION) {
-                return bulbBrightness + 2;
-            }
+        if (operation === TOGGLE_OPERATION) {
+            return bulbBrightness + 2;
+        }
 
-            return bulbBrightness;
-        }),
-    );
+        return bulbBrightness;
+    };
+
+    followInstructions(grid, switchOperation);
 
     return countGridBrightness(grid);
 }
