@@ -6,12 +6,12 @@ let [, , year, day] = process.argv;
 
 function getSubdirectories(parentDirectoryPath: string): string[] {
     return readdirSync(parentDirectoryPath, { withFileTypes: true })
-        .reduce((directories, directoryEntry) => {
+        .reduce<string[]>((directories, directoryEntry) => {
             if (directoryEntry.isDirectory()) {
                 return [...directories, directoryEntry.name];
             }
             return directories;
-        }, [] as string[])
+        }, [])
         .reverse();
 }
 

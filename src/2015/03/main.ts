@@ -51,10 +51,13 @@ function move([currentHouseX, currentHouseY]: House, instruction: string): House
 
 function deliver(deliveryInstructions: string[]): Set<string> {
     let currentHouse = STARTING_HOUSE;
-    return deliveryInstructions.reduce((visitedHouses, instruction) => {
-        currentHouse = move(currentHouse, instruction);
-        return visitedHouses.add(currentHouse.toString());
-    }, new Set([STARTING_HOUSE.toString()]));
+    return deliveryInstructions.reduce(
+        (visitedHouses, instruction) => {
+            currentHouse = move(currentHouse, instruction);
+            return visitedHouses.add(currentHouse.toString());
+        },
+        new Set([STARTING_HOUSE.toString()]),
+    );
 }
 
 export function partOne(): number {
