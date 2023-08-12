@@ -3,8 +3,7 @@
 
 import { InputReader } from '#src/InputReader.ts';
 
-const inputReader = new InputReader(import.meta.url);
-const reindeerDescriptions = inputReader.readAsLines();
+const REINDEER_DESCRIPTIONS = new InputReader(import.meta.url).readAsLines();
 
 interface ReindeerStats {
     speed: number;
@@ -18,7 +17,7 @@ type Scoreboard = Map<string, number>;
 
 const RACE_DURATION = 2503;
 
-const REINDEER_STATS = reindeerDescriptions.reduce<ReindeerStatsMap>(
+const REINDEER_STATS = REINDEER_DESCRIPTIONS.reduce<ReindeerStatsMap>(
     (reindeerStatsMap, reindeerDescription) => {
         const descriptionMatch = reindeerDescription.match(
             /^(?<reindeer>\w+) can fly (?<speed>\d+) km\/s for (?<flyingPhaseDuration>\d+) seconds, but then must rest for (?<restingPhaseDuration>\w+) seconds.$/,

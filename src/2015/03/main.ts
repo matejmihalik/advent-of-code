@@ -3,8 +3,7 @@
 
 import { InputReader } from '#src/InputReader.ts';
 
-const inputReader = new InputReader(import.meta.url);
-const instructions = inputReader.readAsChars();
+const INSTRUCTIONS = new InputReader(import.meta.url).readAsChars();
 
 type House = [number, number];
 
@@ -61,13 +60,12 @@ function deliver(deliveryInstructions: string[]): Set<string> {
 }
 
 export function partOne(): number {
-    return deliver(instructions).size;
+    return deliver(INSTRUCTIONS).size;
 }
 
 export function partTwo(): number {
-    const [instructionsForRobot, instructionsForSanta] = partition(
-        instructions,
-        (instruction, index) => Boolean(index % 2),
+    const [instructionsForRobot, instructionsForSanta] = partition(INSTRUCTIONS, (_, index) =>
+        Boolean(index % 2),
     );
 
     const housesVisitedBySanta = deliver(instructionsForSanta);

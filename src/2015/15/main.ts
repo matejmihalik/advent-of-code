@@ -3,8 +3,7 @@
 
 import { InputReader } from '#src/InputReader.ts';
 
-const inputReader = new InputReader(import.meta.url);
-const ingredientProperties = inputReader.readAsLines();
+const INGREDIENT_PROPERTIES = new InputReader(import.meta.url).readAsLines();
 
 type IngredientMap = Map<string, Map<string, number>>;
 
@@ -13,7 +12,7 @@ type Recipe = Map<string, number>;
 const INGREDIENT_LIMIT = 100;
 const CALORIE_PROPERTY = 'calories';
 
-const INGREDIENT_MAP = ingredientProperties.reduce<IngredientMap>((ingredientMap, description) => {
+const INGREDIENT_MAP = INGREDIENT_PROPERTIES.reduce<IngredientMap>((ingredientMap, description) => {
     const descriptionMatch = description.match(/^(?<ingredient>\w+): (?<properties>.*)$/);
 
     if (!descriptionMatch?.groups) {

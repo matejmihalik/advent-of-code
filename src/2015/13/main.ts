@@ -3,8 +3,7 @@
 
 import { InputReader } from '#src/InputReader.ts';
 
-const inputReader = new InputReader(import.meta.url);
-const seatingPreferences = inputReader.readAsLines();
+const SEATING_PREFERENCES = new InputReader(import.meta.url).readAsLines();
 
 type AffinityMap = Map<string, Map<string, number>>;
 
@@ -24,7 +23,7 @@ function setAffinityToMap(
     attendeeMap.set(neighbour, affinity);
 }
 
-const AFFINITY_MAP = seatingPreferences.reduce<AffinityMap>((affinityMap, relationship) => {
+const AFFINITY_MAP = SEATING_PREFERENCES.reduce<AffinityMap>((affinityMap, relationship) => {
     const relationshipMatch = relationship.match(
         /^(?<attendee>\w+) would (?<sentiment>lose|gain) (?<happinessUnits>\d+) happiness units by sitting next to (?<neighbour>\w+).$/,
     );

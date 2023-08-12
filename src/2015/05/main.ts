@@ -3,15 +3,14 @@
 
 import { InputReader } from '#src/InputReader.ts';
 
-const inputReader = new InputReader(import.meta.url);
-const strings = inputReader.readAsLines();
+const STRINGS = new InputReader(import.meta.url).readAsLines();
 
 function conditionalCount(items: string[], predicate: (item: string) => boolean): number {
     return items.filter(predicate).length;
 }
 
 export function partOne(): number {
-    return conditionalCount(strings, (string) => {
+    return conditionalCount(STRINGS, (string) => {
         const vowelCount = string.match(/[aeiou]/g)?.length ?? 0;
         const containsDoubleLetter = /(?<letter>[a-z])\k<letter>/.test(string);
         const containsForbiddenStrings = /ab|cd|pq|xy/.test(string);
@@ -21,7 +20,7 @@ export function partOne(): number {
 }
 
 export function partTwo(): number {
-    return conditionalCount(strings, (string) => {
+    return conditionalCount(STRINGS, (string) => {
         const containsRepeatedPair = /(?<letterPair>[a-z]{2}).*\k<letterPair>/.test(string);
         const containsRepeatedLetter = /(?<letter>[a-z]).\k<letter>/.test(string);
 

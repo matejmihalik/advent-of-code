@@ -3,8 +3,7 @@
 
 import { InputReader } from '#src/InputReader.ts';
 
-const inputReader = new InputReader(import.meta.url);
-const ledger = inputReader.readAsJson();
+const LEDGER = new InputReader(import.meta.url).readAsJson();
 
 type LedgerEntry = Record<string, unknown> | unknown[] | string | number;
 
@@ -51,10 +50,10 @@ function sumLedgerNumbers(ledgerEntry: LedgerEntry, ignoreKeyword?: string): num
 }
 
 export function partOne(): number {
-    return sumLedgerNumbers(ledger);
+    return sumLedgerNumbers(LEDGER);
 }
 
 export function partTwo(): number {
     const ignoreKeyword = 'red';
-    return sumLedgerNumbers(ledger, ignoreKeyword);
+    return sumLedgerNumbers(LEDGER, ignoreKeyword);
 }

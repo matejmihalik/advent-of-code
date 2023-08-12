@@ -3,8 +3,7 @@
 
 import { InputReader } from '#src/InputReader.ts';
 
-const inputReader = new InputReader(import.meta.url);
-const input = inputReader.readAsString();
+const INPUT = new InputReader(import.meta.url).readAsString();
 
 function lookAndSay(sequence: string): string {
     const digitSequences = Array.from(sequence.match(/(?<digit>\d)\k<digit>*/g) ?? []);
@@ -17,7 +16,7 @@ function lookAndSay(sequence: string): string {
 }
 
 function playGame(numberOfTurns: number): string {
-    let sequence = input;
+    let sequence = INPUT;
 
     for (let turnNumber = 0; turnNumber < numberOfTurns; turnNumber++) {
         sequence = lookAndSay(sequence);

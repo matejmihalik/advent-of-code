@@ -3,13 +3,12 @@
 
 import { InputReader } from '#src/InputReader.ts';
 
-const inputReader = new InputReader(import.meta.url);
-const gifts = inputReader.readAsLines();
+const GIFTS = new InputReader(import.meta.url).readAsLines();
 
 const DIMENSION_SEPARATOR = 'x';
 
 export function partOne(): number {
-    return gifts.reduce((totalPaperArea, gift) => {
+    return GIFTS.reduce((totalPaperArea, gift) => {
         const [length, width, height] = gift
             .split(DIMENSION_SEPARATOR)
             .map((dimension) => Number(dimension));
@@ -26,7 +25,7 @@ export function partOne(): number {
 }
 
 export function partTwo(): number {
-    return gifts.reduce((totalRibbonLength, gift) => {
+    return GIFTS.reduce((totalRibbonLength, gift) => {
         const dimensions = gift.split(DIMENSION_SEPARATOR).map((dimension) => Number(dimension));
         const [, ...smallestDimensions] = dimensions.sort((a, b) => b - a);
 

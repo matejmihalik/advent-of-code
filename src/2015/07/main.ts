@@ -3,8 +3,7 @@
 
 import { InputReader } from '#src/InputReader.ts';
 
-const inputReader = new InputReader(import.meta.url);
-const instructions = inputReader.readAsLines();
+const INSTRUCTIONS = new InputReader(import.meta.url).readAsLines();
 
 type Circuit = Map<string, string>;
 
@@ -84,7 +83,7 @@ function traceWire(circuit: Circuit, wire: string): number {
 }
 
 function followInstructions(circuit: Circuit): void {
-    instructions.forEach((instruction) => connectWire(circuit, instruction));
+    INSTRUCTIONS.forEach((instruction) => connectWire(circuit, instruction));
 }
 
 export function partOne(): number {

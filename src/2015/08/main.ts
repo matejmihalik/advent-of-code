@@ -3,8 +3,7 @@
 
 import { InputReader } from '#src/InputReader.ts';
 
-const inputReader = new InputReader(import.meta.url);
-const strings = inputReader.readAsLines();
+const STRINGS = new InputReader(import.meta.url).readAsLines();
 
 function unescape(string: string): string {
     return string
@@ -23,12 +22,12 @@ function unescape(string: string): string {
 }
 
 export function partOne(): number {
-    const rawCharacterCount = strings.reduce(
+    const rawCharacterCount = STRINGS.reduce(
         (characterCount, string) => characterCount + string.length,
         0,
     );
 
-    const unescapedCharacterCount = strings.reduce(
+    const unescapedCharacterCount = STRINGS.reduce(
         (characterCount, string) => characterCount + unescape(string).length,
         0,
     );
@@ -37,12 +36,12 @@ export function partOne(): number {
 }
 
 export function partTwo(): number {
-    const escapedCharacterCount = strings.reduce(
+    const escapedCharacterCount = STRINGS.reduce(
         (characterCount, string) => characterCount + JSON.stringify(string).length,
         0,
     );
 
-    const rawCharacterCount = strings.reduce(
+    const rawCharacterCount = STRINGS.reduce(
         (characterCount, string) => characterCount + string.length,
         0,
     );

@@ -3,8 +3,7 @@
 
 import { InputReader } from '#src/InputReader.ts';
 
-const inputReader = new InputReader(import.meta.url);
-const profiles = inputReader.readAsLines();
+const PROFILES = new InputReader(import.meta.url).readAsLines();
 
 type Criterion =
     | number
@@ -19,7 +18,7 @@ type Profile = Map<string, number>;
 
 type ProfileMap = Map<number, Profile>;
 
-const PROFILE_MAP = profiles.reduce<ProfileMap>((profileMap, description) => {
+const PROFILE_MAP = PROFILES.reduce<ProfileMap>((profileMap, description) => {
     const descriptionMatch = description.match(/^Sue (?<profileId>\d+): (?<properties>.*)$/);
 
     if (!descriptionMatch?.groups) {

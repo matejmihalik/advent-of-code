@@ -3,8 +3,7 @@
 
 import { InputReader } from '#src/InputReader.ts';
 
-const inputReader = new InputReader(import.meta.url);
-const instructions = inputReader.readAsLines();
+const INSTRUCTIONS = new InputReader(import.meta.url).readAsLines();
 
 type LightGrid = number[][];
 
@@ -44,7 +43,7 @@ function switchLights(
 }
 
 function followInstructions(grid: LightGrid, switchOperation: SwitchOperation): void {
-    instructions.forEach((instruction) => switchLights(grid, instruction, switchOperation));
+    INSTRUCTIONS.forEach((instruction) => switchLights(grid, instruction, switchOperation));
 }
 
 function countGridBrightness(grid: LightGrid): number {

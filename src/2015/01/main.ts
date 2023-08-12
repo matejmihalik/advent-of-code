@@ -3,8 +3,7 @@
 
 import { InputReader } from '#src/InputReader.ts';
 
-const inputReader = new InputReader(import.meta.url);
-const instructions = inputReader.readAsChars();
+const INSTRUCTIONS = new InputReader(import.meta.url).readAsChars();
 
 const STARTING_FLOOR = 0;
 const GO_UP_INSTRUCTION = '(';
@@ -23,13 +22,13 @@ function move(currentFloor: number, instruction: string): number {
 }
 
 export function partOne(): number {
-    return instructions.reduce(move, STARTING_FLOOR);
+    return INSTRUCTIONS.reduce(move, STARTING_FLOOR);
 }
 
 export function partTwo(): number {
     let currentFloor = STARTING_FLOOR;
 
-    const firstBasementEntryIndex = instructions.findIndex((instruction) => {
+    const firstBasementEntryIndex = INSTRUCTIONS.findIndex((instruction) => {
         currentFloor = move(currentFloor, instruction);
         return currentFloor < STARTING_FLOOR;
     });

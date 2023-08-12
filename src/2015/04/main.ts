@@ -4,12 +4,11 @@
 import { createHash } from 'crypto';
 import { InputReader } from '#src/InputReader.ts';
 
-const inputReader = new InputReader(import.meta.url);
-const secretKey = inputReader.readAsString();
+const SECRET_KEY = new InputReader(import.meta.url).readAsString();
 
 function constructHash(decimalComponent: number): string {
     return createHash('md5')
-        .update(secretKey + decimalComponent)
+        .update(SECRET_KEY + decimalComponent)
         .digest('hex');
 }
 

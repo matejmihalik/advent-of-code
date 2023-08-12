@@ -3,8 +3,7 @@
 
 import { InputReader } from '#src/InputReader.ts';
 
-const inputReader = new InputReader(import.meta.url);
-const routes = inputReader.readAsLines();
+const ROUTES = new InputReader(import.meta.url).readAsLines();
 
 type DistanceMap = Map<string, Map<string, number>>;
 
@@ -26,7 +25,7 @@ function setDistanceToMap(
     startLocationMap.set(targetLocation, distance);
 }
 
-const DISTANCE_MAP = routes.reduce<DistanceMap>((distanceMap, route) => {
+const DISTANCE_MAP = ROUTES.reduce<DistanceMap>((distanceMap, route) => {
     const routeMatch = route.match(
         /^(?<startLocation>\w+) to (?<endLocation>\w+) = (?<distance>\d+)$/,
     );

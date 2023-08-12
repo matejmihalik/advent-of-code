@@ -3,8 +3,7 @@
 
 import { InputReader } from '#src/InputReader.ts';
 
-const inputReader = new InputReader(import.meta.url);
-const expiredPassword = inputReader.readAsString();
+const EXPIRED_PASSWORD = new InputReader(import.meta.url).readAsString();
 
 const MIN_LETTER_VALUE = 'a'.charCodeAt(0);
 const MAX_LETTER_VALUE = 'z'.charCodeAt(0);
@@ -63,7 +62,7 @@ function isPasswordValid(password: string): boolean {
 }
 
 export function partOne(): string {
-    let password = expiredPassword;
+    let password = EXPIRED_PASSWORD;
 
     while (!isPasswordValid(password)) {
         password = incrementPassword(password);
@@ -75,7 +74,7 @@ export function partOne(): string {
 export function partTwo(): string {
     const targetValidPasswordIteration = 2;
     let validPasswordsFound = 0;
-    let password = expiredPassword;
+    let password = EXPIRED_PASSWORD;
 
     while (validPasswordsFound < targetValidPasswordIteration) {
         password = incrementPassword(password);
