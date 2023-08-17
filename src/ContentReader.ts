@@ -17,6 +17,10 @@ export class ContentReader {
         return this.readAsString().split('\n');
     }
 
+    readAsNumber(): number {
+        return Number(this.readAsString());
+    }
+
     readAsNumbers(): number[] {
         return this.readAsLines().map(Number);
     }
