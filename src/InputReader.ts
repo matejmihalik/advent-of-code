@@ -1,28 +1,23 @@
 import { readFileSync } from 'fs';
 
+import { ContentReader } from './ContentReader.ts';
+
 const INPUT_FILENAME = 'input.txt';
 
-export class InputReader {
-    #fileBuffer: string;
-
+export class InputReader extends ContentReader {
     constructor(solutionUrl: string) {
-        const fileUrl = new URL(INPUT_FILENAME, solutionUrl);
-        this.#fileBuffer = readFileSync(fileUrl, 'utf-8');
-    }
-
-    readAsString(): string {
-        return this.#fileBuffer.trim();
-    }
-
-    readAsChars(): string[] {
-        return this.readAsString().split('');
-    }
-
-    readAsLines(): string[] {
-        return this.readAsString().split('\n');
+        const inputFilePath = new URL(INPUT_FILENAME, solutionUrl);
+        const inputFileContent = readFileSync(inputFilePath, 'utf-8');
+        super(inputFileContent);
     }
 
     readAsJson(): Record<string, unknown> {
         return JSON.parse(this.readAsString());
+    }
+
+    readAsSections(): ContentReader[] {
+        return this.readAsString()
+            .split('\n\n')
+            .map((sectionContent) => new ContentReader(sectionContent));
     }
 }
