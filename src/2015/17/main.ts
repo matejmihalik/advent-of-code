@@ -3,9 +3,8 @@
 
 import { InputReader } from '#src/InputReader.ts';
 
-const RAW_CONTAINERS = new InputReader(import.meta.url).readAsLines();
+const ALL_CONTAINERS = new InputReader(import.meta.url).readAsNumbers();
 
-const ALL_CONTAINERS = RAW_CONTAINERS.map(Number);
 const EGGNOG_AMOUNT = 150;
 
 function getAllExactContainerCombinations(
