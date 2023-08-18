@@ -15,9 +15,7 @@
   },
   "settings": {
     "import/parsers": {
-      "@typescript-eslint/parser": [
-        ".ts"
-      ]
+      "@typescript-eslint/parser": [".ts"]
     },
     "import/resolver": {
       "typescript": {
@@ -35,6 +33,13 @@
     ],
     "import/no-import-module-exports": "off",
     "import/prefer-default-export": "off",
+    "lines-between-class-members": [
+      "error",
+      "always",
+      {
+        "exceptAfterSingleLine": true
+      }
+    ],
     "no-bitwise": "off",
     "no-console": "off",
     "no-param-reassign": [
