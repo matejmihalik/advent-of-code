@@ -24,10 +24,6 @@ export class Character {
     }
 
     attack(target: Character, damageModifier = 0): void {
-        if (this.isDead()) {
-            return;
-        }
-
         const totalDamage = this.#damage + damageModifier;
         target.takeDamage(totalDamage);
     }

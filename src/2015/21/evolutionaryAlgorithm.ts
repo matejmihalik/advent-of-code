@@ -116,7 +116,9 @@ function mutateEquipmentSet(equipmentSet: EquipmentSet): EquipmentSet {
 }
 
 export function findBestEquipmentSet(fitnessComparator: FitnessComparator): EquipmentSet {
-    const population: EquipmentSet[] = Array(POPULATION_SIZE).fill(generateRandomEquipmentSet());
+    const population: EquipmentSet[] = Array(POPULATION_SIZE)
+        .fill(null)
+        .map(generateRandomEquipmentSet);
 
     for (let generationNumber = 0; generationNumber < GENERATION_CAP; generationNumber++) {
         population.sort(fitnessComparator);

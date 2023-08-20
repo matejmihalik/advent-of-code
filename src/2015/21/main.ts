@@ -5,7 +5,8 @@ import { InputReader } from '#src/InputReader.ts';
 
 import { Character, type CharacterStats } from './Character.ts';
 import { Player } from './Player.ts';
-import { findBestEquipmentSet, FitnessComparator } from './EvolutionaryAlgorithm.ts';
+import { resolveCombat } from './combatEngine.ts';
+import { findBestEquipmentSet, FitnessComparator } from './evolutionaryAlgorithm.ts';
 
 const RAW_BOSS_STATS = new InputReader(import.meta.url).readAsLines();
 
@@ -30,13 +31,6 @@ const BOSS_STATS = RAW_BOSS_STATS.reduce<CharacterStats>((bossStats, rawStat) =>
     };
 }, {});
 
-function resolveCombat(player: Player, boss: Character): void {
-    while (!player.isDead() && !boss.isDead()) {
-        player.attack(boss);
-        boss.attack(player);
-    }
-}
-
 export function partOne(): number {
     const fitnessComparator: FitnessComparator = (equipmentSetA, equipmentSetB) => {
         const playerA = new Player(equipmentSetA);
@@ -57,7 +51,7 @@ export function partOne(): number {
         }
 
         if (!playerASurvived && !playerBSurvived) {
-            return bossB.remainingHp - bossA.remainingHp;
+            return bossA.remainingHp - bossB.remainingHp;
         }
 
         const playerAEquipmentCost = playerA.getTotalEquipmentModifier('cost');

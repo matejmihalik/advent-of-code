@@ -24,13 +24,6 @@ export class Player extends Character {
         this.#rightHandRing = rightHandRing;
     }
 
-    getTotalEquipmentModifier(targetStat: keyof Equipment): number {
-        return [this.#weapon, this.#armor, this.#leftHandRing, this.#rightHandRing].reduce(
-            (totalValue, equipment) => totalValue + (equipment?.[targetStat] ?? 0),
-            0,
-        );
-    }
-
     attack(target: Character): void {
         const damageBonus = this.getTotalEquipmentModifier('damage');
         super.attack(target, damageBonus);
@@ -39,5 +32,12 @@ export class Player extends Character {
     takeDamage(damage: number): void {
         const armorBonus = this.getTotalEquipmentModifier('armor');
         super.takeDamage(damage, armorBonus);
+    }
+
+    getTotalEquipmentModifier(targetStat: keyof Equipment): number {
+        return [this.#weapon, this.#armor, this.#leftHandRing, this.#rightHandRing].reduce(
+            (totalValue, equipment) => totalValue + (equipment?.[targetStat] ?? 0),
+            0,
+        );
     }
 }
