@@ -3,7 +3,7 @@
 
 import { InputReader } from '#src/InputReader.ts';
 
-const ALL_CONTAINERS = new InputReader(import.meta.url).readAsNumbers();
+const CONTAINERS = new InputReader(import.meta.url).readAsNumbers();
 
 const EGGNOG_AMOUNT = 150;
 
@@ -35,11 +35,11 @@ function getAllExactContainerCombinations(
 }
 
 export function partOne(): number {
-    return getAllExactContainerCombinations(ALL_CONTAINERS, EGGNOG_AMOUNT).length;
+    return getAllExactContainerCombinations(CONTAINERS, EGGNOG_AMOUNT).length;
 }
 
 export function partTwo(): number {
-    const exactCombinations = getAllExactContainerCombinations(ALL_CONTAINERS, EGGNOG_AMOUNT);
+    const exactCombinations = getAllExactContainerCombinations(CONTAINERS, EGGNOG_AMOUNT);
     const exactCombinationLengths = exactCombinations.map((combination) => combination.length);
     const minimalNumberOfContainersRequired = Math.min(...exactCombinationLengths);
 
