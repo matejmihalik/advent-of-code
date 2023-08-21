@@ -51,5 +51,10 @@ await inquirer
 
 const { partOne, partTwo } = await import(join('#src', year, day.padStart(2, '0'), 'main.ts'));
 
-console.log(`Part one: ${partOne()}`);
-console.log(`Part two: ${partTwo()}`);
+if (partOne) {
+    console.log(`Part one: ${partOne()}`);
+}
+
+if (partTwo) {
+    console.log(`Part two: ${partTwo()}`);
+}
