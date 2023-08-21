@@ -32,15 +32,18 @@ function findAllPackageCombinationsForSingleCompartment(
     );
 }
 
-function findIdealPassengerCompartmentArrangements(compartmentCount: number): number[][] {
-    const totalPackageWeight = PACKAGES.reduce(
+function findIdealPassengerCompartmentArrangements(
+    packages: number[],
+    compartmentCount: number,
+): number[][] {
+    const totalPackageWeight = packages.reduce(
         (totalWeight, packageWeight) => totalWeight + packageWeight,
         0,
     );
     const compartmentCapacity = totalPackageWeight / compartmentCount;
 
     const combinations = findAllPackageCombinationsForSingleCompartment(
-        PACKAGES,
+        packages,
         compartmentCapacity,
     );
 
@@ -67,7 +70,7 @@ function calculateQuantumEntanglement(packages: number[]): number {
 }
 
 function findMinimalQuantumEntanglement(compartmentCount: number): number {
-    const idealArrangements = findIdealPassengerCompartmentArrangements(compartmentCount);
+    const idealArrangements = findIdealPassengerCompartmentArrangements(PACKAGES, compartmentCount);
     const quantumEntanglements = idealArrangements.map(calculateQuantumEntanglement);
 
     return Math.min(...quantumEntanglements);
