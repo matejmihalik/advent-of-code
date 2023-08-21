@@ -5,7 +5,7 @@
     "esModuleInterop": true,
     "incremental": true,
     "module": "NodeNext",
-    "moduleResolution": "NodeNext",
+    "moduleResolution": "nodenext",
     "noEmit": true,
     "noImplicitAny": true,
     "skipLibCheck": true,
