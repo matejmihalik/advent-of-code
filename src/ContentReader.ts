@@ -13,6 +13,10 @@ export class ContentReader {
         return this.readAsString().split('');
     }
 
+    readAsComaSeparatedValues(): string[] {
+        return this.readAsString().split(', ');
+    }
+
     readAsLines(): string[] {
         return this.readAsString().split('\n');
     }
