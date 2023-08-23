@@ -2,6 +2,7 @@
 // https://adventofcode.com/2015/day/4
 
 import { createHash } from 'crypto';
+
 import { InputReader } from '#src/InputReader.ts';
 
 const SECRET_KEY = new InputReader(import.meta.url).readAsString();
