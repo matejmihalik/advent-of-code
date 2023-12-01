@@ -30,7 +30,7 @@ function parseCalibrationLine(
 function sumCalibrationValues(
     calibrationLines: string[],
     valueMatcher: RegExp,
-    valueParser: ValueParser = (value) => Number(value),
+    valueParser: ValueParser,
 ): number {
     return calibrationLines
         .map((line) => parseCalibrationLine(line, valueMatcher, valueParser))
@@ -40,7 +40,7 @@ function sumCalibrationValues(
 export function partOne(): number {
     const valueMatcher = /\d/;
 
-    return sumCalibrationValues(CALIBRATION_LINES, valueMatcher);
+    return sumCalibrationValues(CALIBRATION_LINES, valueMatcher, (value) => Number(value));
 }
 
 export function partTwo(): number {
