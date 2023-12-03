@@ -24,6 +24,7 @@ function findSchematicNumbers(schematic: EngineSchematic): SchematicNumbers[] {
     return schematic.reduce<SchematicNumbers[]>((schematicNumbers, row, rowIndex) => {
         Array.from(row.matchAll(/\d+/g)).forEach(({ 0: number, index: startColumn = 0 }) => {
             const endColumn = startColumn + number.length - 1;
+
             schematicNumbers.push({
                 value: Number(number),
                 row: rowIndex,
