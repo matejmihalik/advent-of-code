@@ -102,7 +102,7 @@ export function partOne(): number {
 function buildGearCandidateMap(schematic: EngineSchematic): GearCandidateMap {
     return findSchematicNumbers(schematic).reduce<GearCandidateMap>(
         (gearCandidateMap, { value, row, startColumn, endColumn }) => {
-            const gearSymbolRegExp = /[*]/;
+            const gearSymbolRegExp = /\*/;
 
             const adjacentGearCandidates = findAdjacentSymbols(
                 schematic,
