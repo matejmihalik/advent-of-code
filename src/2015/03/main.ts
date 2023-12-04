@@ -5,7 +5,7 @@ import { InputReader } from '#src/InputReader.ts';
 
 const INSTRUCTIONS = new InputReader(import.meta.url).readAsChars();
 
-type House = [number, number];
+type House = [x: number, y: number];
 
 const STARTING_HOUSE: House = [0, 0];
 const GO_UP_INSTRUCTION = '^';
@@ -50,6 +50,7 @@ function move([currentHouseX, currentHouseY]: House, instruction: string): House
 
 function deliver(deliveryInstructions: string[]): Set<string> {
     let currentHouse = STARTING_HOUSE;
+
     return deliveryInstructions.reduce(
         (visitedHouses, instruction) => {
             currentHouse = move(currentHouse, instruction);

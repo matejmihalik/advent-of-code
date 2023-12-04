@@ -7,7 +7,7 @@ const INITIAL_GRID_STATE = new InputReader(import.meta.url).readAsLines();
 
 type LightGrid = boolean[][];
 
-type LightCoordinates = [number, number];
+type LightCoordinates = [row: number, column: number];
 
 const STEP_LIMIT = 100;
 const LIGHT_STATE_ON_SYMBOL = '#';
@@ -61,7 +61,7 @@ function isLightStuck(light: LightCoordinates, stuckLights: LightCoordinates[]):
     return serializedStuckLights.includes(light.toString());
 }
 
-function animateGrid(lightGrid: LightGrid, stuckLights: LightCoordinates[] = []): LightGrid {
+function animateGrid(lightGrid: LightGrid, stuckLights: LightCoordinates[]): LightGrid {
     return lightGrid.map((gridRow, rowIndex) =>
         gridRow.map((currentLight, columnIndex) => {
             if (isLightStuck([rowIndex, columnIndex], stuckLights)) {
@@ -73,7 +73,21 @@ function animateGrid(lightGrid: LightGrid, stuckLights: LightCoordinates[] = [])
     );
 }
 
-function countActiveLights(lightGrid: LightGrid): number {
+function animateGridForNSteps(
+    initialGrid: LightGrid,
+    stepLimit: number,
+    stuckLights: LightCoordinates[] = [],
+): LightGrid {
+    let currentGrid = initialGrid;
+
+    for (let iteration = 0; iteration < stepLimit; iteration++) {
+        currentGrid = animateGrid(currentGrid, stuckLights);
+    }
+
+    return currentGrid;
+}
+
+function countActiveGridLights(lightGrid: LightGrid): number {
     return lightGrid.reduce(
         (totalActiveLights, currentRow) =>
             totalActiveLights +
@@ -83,33 +97,31 @@ function countActiveLights(lightGrid: LightGrid): number {
 }
 
 export function partOne(): number {
-    let lightGrid = INITIAL_GRID;
-
-    for (let iteration = 0; iteration < STEP_LIMIT; iteration++) {
-        lightGrid = animateGrid(lightGrid);
-    }
-
-    return countActiveLights(lightGrid);
+    const finalGrid = animateGridForNSteps(INITIAL_GRID, STEP_LIMIT);
+    return countActiveGridLights(finalGrid);
 }
 
-export function partTwo(): number {
-    const gridHeight = INITIAL_GRID.length;
-    const gridLength = INITIAL_GRID[0].length;
-    const stuckLights: LightCoordinates[] = [
+function getGridCornerLights(grid: LightGrid): LightCoordinates[] {
+    const gridHeight = grid.length;
+    const gridLength = grid[0].length;
+
+    return [
         [0, 0],
         [0, gridLength - 1],
         [gridHeight - 1, 0],
         [gridHeight - 1, gridLength - 1],
     ];
+}
 
-    let lightGrid = INITIAL_GRID;
+export function partTwo(): number {
+    const initialGrid = INITIAL_GRID;
+
+    const stuckLights = getGridCornerLights(INITIAL_GRID);
     stuckLights.forEach(([lightRow, lightColumn]) => {
-        lightGrid[lightRow][lightColumn] = true;
+        initialGrid[lightRow][lightColumn] = true;
     });
 
-    for (let iteration = 0; iteration < STEP_LIMIT; iteration++) {
-        lightGrid = animateGrid(lightGrid, stuckLights);
-    }
+    const finalGrid = animateGridForNSteps(initialGrid, STEP_LIMIT, stuckLights);
 
-    return countActiveLights(lightGrid);
+    return countActiveGridLights(finalGrid);
 }

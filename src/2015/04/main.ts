@@ -13,14 +13,14 @@ function constructHash(decimalComponent: number): string {
         .digest('hex');
 }
 
-function findDecimalComponentForHashWithPrefix(hashPrefix: string): number {
+function findDecimalComponentForHashWithPrefix(targetHashPrefix: string): number {
     let decimalComponent = 0;
     let hash;
 
     do {
         decimalComponent++;
         hash = constructHash(decimalComponent);
-    } while (!hash.startsWith(hashPrefix));
+    } while (!hash.startsWith(targetHashPrefix));
 
     return decimalComponent;
 }

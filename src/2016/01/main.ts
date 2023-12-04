@@ -14,7 +14,7 @@ interface Instruction {
 
 type Direction = 'north' | 'south' | 'west' | 'east';
 
-type Position = [number, number];
+type Position = [row: number, column: number];
 
 type Move = [Position, Position];
 

@@ -26,6 +26,7 @@ function isValidTriangle(sides: Triangle): boolean {
     return sides.every((currentSide, currentSideIndex) => {
         const otherSides = [...sides];
         otherSides.splice(currentSideIndex, 1);
+
         return currentSide < otherSides.reduce((sum, side) => sum + side, 0);
     });
 }

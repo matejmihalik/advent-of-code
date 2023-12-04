@@ -28,13 +28,11 @@ export class Character {
         this.#hp = 0;
     }
 
-    attack(target: Character, damageModifier = 0): void {
-        const totalDamage = this.#damage + damageModifier;
-        target.takeDamage(totalDamage);
+    attack(target: Character): void {
+        target.takeDamage(this.#damage);
     }
 
-    takeDamage(damage: number, armorModifier = 0): void {
-        const damageTaken = Math.max(damage - armorModifier, 1);
-        this.#hp -= damageTaken;
+    takeDamage(damage: number): void {
+        this.#hp -= damage;
     }
 }

@@ -7,7 +7,7 @@ const INSTRUCTIONS = new InputReader(import.meta.url).readAsLines();
 
 type Move = 'U' | 'D' | 'L' | 'R';
 
-type KeyPosition = [number, number];
+type KeyPosition = [row: number, column: number];
 
 type Keypad = string[][];
 

@@ -9,7 +9,7 @@ const [RAW_REPLACEMENTS_SECTION, INPUT_MOLECULE_SECTION] = new InputReader(
 const RAW_REPLACEMENTS = RAW_REPLACEMENTS_SECTION.readAsLines();
 const INPUT_MOLECULE = INPUT_MOLECULE_SECTION.readAsString();
 
-type Replacement = [string, string];
+type Replacement = [originalSequence: string, replacementSequence: string];
 
 const REPLACEMENTS = RAW_REPLACEMENTS.reduce<Replacement[]>((replacements, replacement) => {
     const replacementMatch = replacement.match(
@@ -64,7 +64,9 @@ function undoLongestMutation(molecule: string): string {
         return molecule;
     }
 
-    return molecule.replace(longestAppliedMutation[1], longestAppliedMutation[0]);
+    const [originalSequence, replacementSequence] = longestAppliedMutation;
+
+    return molecule.replace(replacementSequence, originalSequence);
 }
 
 export function partTwo(): number {

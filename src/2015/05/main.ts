@@ -11,11 +11,11 @@ function conditionalCount(items: string[], predicate: (item: string) => boolean)
 
 export function partOne(): number {
     return conditionalCount(STRINGS, (string) => {
-        const vowelCount = string.match(/[aeiou]/g)?.length ?? 0;
+        const hasThreeVowels = /(?:.*?[aeiou].*?){3}/.test(string);
         const containsDoubleLetter = /(?<letter>[a-z])\k<letter>/.test(string);
         const containsForbiddenStrings = /ab|cd|pq|xy/.test(string);
 
-        return vowelCount >= 3 && containsDoubleLetter && !containsForbiddenStrings;
+        return hasThreeVowels && containsDoubleLetter && !containsForbiddenStrings;
     });
 }
 

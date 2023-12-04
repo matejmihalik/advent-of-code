@@ -5,6 +5,10 @@ import { InputReader } from '#src/InputReader.ts';
 
 const STRINGS = new InputReader(import.meta.url).readAsLines();
 
+function countCharacters(strings: string[], transform = (string: string) => string): number {
+    return strings.reduce((characterCount, string) => characterCount + transform(string).length, 0);
+}
+
 function unescape(string: string): string {
     return string
         .slice(1, -1)
@@ -22,29 +26,15 @@ function unescape(string: string): string {
 }
 
 export function partOne(): number {
-    const rawCharacterCount = STRINGS.reduce(
-        (characterCount, string) => characterCount + string.length,
-        0,
-    );
-
-    const unescapedCharacterCount = STRINGS.reduce(
-        (characterCount, string) => characterCount + unescape(string).length,
-        0,
-    );
+    const rawCharacterCount = countCharacters(STRINGS);
+    const unescapedCharacterCount = countCharacters(STRINGS, unescape);
 
     return rawCharacterCount - unescapedCharacterCount;
 }
 
 export function partTwo(): number {
-    const escapedCharacterCount = STRINGS.reduce(
-        (characterCount, string) => characterCount + JSON.stringify(string).length,
-        0,
-    );
-
-    const rawCharacterCount = STRINGS.reduce(
-        (characterCount, string) => characterCount + string.length,
-        0,
-    );
+    const rawCharacterCount = countCharacters(STRINGS);
+    const escapedCharacterCount = countCharacters(STRINGS, JSON.stringify);
 
     return escapedCharacterCount - rawCharacterCount;
 }

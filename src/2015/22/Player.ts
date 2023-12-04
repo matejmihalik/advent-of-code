@@ -47,6 +47,11 @@ export class Player extends Character {
     }
 
     takeDamage(damage: number): void {
-        super.takeDamage(damage, this.#armor);
+        const damageAfterReduction = Math.max(damage - this.#armor, 1);
+        super.takeDamage(damageAfterReduction);
+    }
+
+    takeDirectDamage(damage: number): void {
+        super.takeDamage(damage);
     }
 }

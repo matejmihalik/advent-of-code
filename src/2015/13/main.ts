@@ -51,11 +51,13 @@ function getAllPossibleSeatingArrangements(attendees: string[]): string[][] {
 
     return getAllPossibleSeatingArrangements(otherAttendees).flatMap((arrangement) => {
         const arrangementsWithCurrentAttendee = [];
+
         for (let position = 0; position <= arrangement.length; position++) {
             const arrangementWithCurrentAttendee = [...arrangement];
             arrangementWithCurrentAttendee.splice(position, 0, currentAttendee);
             arrangementsWithCurrentAttendee.push(arrangementWithCurrentAttendee);
         }
+
         return arrangementsWithCurrentAttendee;
     });
 }

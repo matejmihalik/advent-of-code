@@ -61,25 +61,21 @@ function isPasswordValid(password: string): boolean {
     return containsStraight && !containsForbiddenLetters && containsTwoLetterPairs;
 }
 
+function findNextValidPasswordIteration(startingPassword: string): string {
+    let currentPassword = startingPassword;
+
+    do {
+        currentPassword = incrementPassword(currentPassword);
+    } while (!isPasswordValid(currentPassword));
+
+    return currentPassword;
+}
+
 export function partOne(): string {
-    let password = EXPIRED_PASSWORD;
-
-    while (!isPasswordValid(password)) {
-        password = incrementPassword(password);
-    }
-
-    return password;
+    return findNextValidPasswordIteration(EXPIRED_PASSWORD);
 }
 
 export function partTwo(): string {
-    const targetValidPasswordIteration = 2;
-    let validPasswordsFound = 0;
-    let password = EXPIRED_PASSWORD;
-
-    while (validPasswordsFound < targetValidPasswordIteration) {
-        password = incrementPassword(password);
-        validPasswordsFound += Number(isPasswordValid(password));
-    }
-
-    return password;
+    const startingPassword = partOne();
+    return findNextValidPasswordIteration(startingPassword);
 }

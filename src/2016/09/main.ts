@@ -16,8 +16,7 @@ function calculateDecompressedFileLength(compressedFile: string, deepDecompress 
 
         if (!currentMarkerMatch?.groups) {
             decompressedFileLength += remainingCompressedFile.length;
-            remainingCompressedFile = '';
-            continue;
+            break;
         }
 
         const { repeatedCharacters, repeatIterations } = currentMarkerMatch.groups;

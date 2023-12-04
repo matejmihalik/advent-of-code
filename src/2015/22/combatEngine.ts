@@ -4,10 +4,17 @@ import { type SpellEffect } from './Spellbook.ts';
 
 export type Difficulty = 'normal' | 'hard';
 
-const DIFFICULTY_DAMAGE_MODIFIER_MAP: Record<Difficulty, number> = {
-    normal: 0,
-    hard: 1,
-};
+function createDifficultyModifierEffect(player: Player, difficulty: Difficulty): SpellEffect {
+    const difficultyDamageMap: Record<Difficulty, number> = {
+        normal: 0,
+        hard: 1,
+    };
+
+    return {
+        duration: Infinity,
+        onTick: () => player.takeDirectDamage(difficultyDamageMap[difficulty]),
+    };
+}
 
 function processEffects(effects: SpellEffect[]): SpellEffect[] {
     return effects.reduce<SpellEffect[]>((ongoingEffects, currentEffect) => {
@@ -23,16 +30,26 @@ function processEffects(effects: SpellEffect[]): SpellEffect[] {
     }, []);
 }
 
-export function resolveCombat(player: Player, boss: Character, difficulty: Difficulty): number {
-    const difficultyDamageModifier = DIFFICULTY_DAMAGE_MODIFIER_MAP[difficulty];
+function isCombatOver(player: Player, boss: Character): boolean {
+    return player.isDead() || boss.isDead();
+}
 
+export function resolveCombat(player: Player, boss: Character, difficulty: Difficulty): number {
     let spellsCast = 0;
     let activeEffects: SpellEffect[] = [];
+    const difficultyModifierEffect = createDifficultyModifierEffect(player, difficulty);
+    let globalEffects = [difficultyModifierEffect];
 
-    while (!player.isDead() && !boss.isDead()) {
+    while (!isCombatOver(player, boss)) {
+        globalEffects = processEffects(globalEffects);
+
+        if (isCombatOver(player, boss)) {
+            break;
+        }
+
         activeEffects = processEffects(activeEffects);
 
-        if (boss.isDead()) {
+        if (isCombatOver(player, boss)) {
             break;
         }
 
@@ -44,17 +61,17 @@ export function resolveCombat(player: Player, boss: Character, difficulty: Diffi
             activeEffects.push(spellEffect);
         }
 
-        if (player.isDead() || boss.isDead()) {
+        if (isCombatOver(player, boss)) {
             break;
         }
 
         activeEffects = processEffects(activeEffects);
 
-        if (boss.isDead()) {
+        if (isCombatOver(player, boss)) {
             break;
         }
 
-        boss.attack(player, difficultyDamageModifier);
+        boss.attack(player);
     }
 
     return spellsCast;
