@@ -43,6 +43,7 @@
     "no-bitwise": "off",
     "no-console": "off",
     "no-continue": "off",
+    "no-multi-assign": "off",
     "no-param-reassign": [
       "error",
       {
