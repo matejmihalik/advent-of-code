@@ -28,7 +28,7 @@ const HANDS = RAW_HANDS.map<Hand>((rawHand) => {
     };
 });
 
-function buildCardLabelHistogram(cards: string): Map<string, number> {
+function buildCardHistogram(cards: string): Map<string, number> {
     return [...cards].reduce((histogram, cardLabel) => {
         const currentHits = histogram.get(cardLabel) ?? 0;
         histogram.set(cardLabel, currentHits + 1);
@@ -46,35 +46,29 @@ function getHandType({ cards }: Hand, allowJokers: boolean): HandType {
         jokerCount = cards.length - cardsWithoutJokers.length;
     }
 
-    const cardLabelHistogram = buildCardLabelHistogram(cardsWithoutJokers);
+    const cardHistogram = buildCardHistogram(cardsWithoutJokers);
 
-    if (cardLabelHistogram.size <= 1) {
+    if (cardHistogram.size <= 1) {
         return HandType.FIVE_OF_A_KIND;
     }
 
-    if (Array.from(cardLabelHistogram.values()).includes(4 - jokerCount)) {
+    if (Array.from(cardHistogram.values()).includes(4 - jokerCount)) {
         return HandType.FOUR_OF_A_KIND;
     }
 
-    if (
-        cardLabelHistogram.size === 2 &&
-        Array.from(cardLabelHistogram.values()).includes(3 - jokerCount)
-    ) {
+    if (cardHistogram.size === 2 && Array.from(cardHistogram.values()).includes(3 - jokerCount)) {
         return HandType.FULL_HOUSE;
     }
 
-    if (
-        cardLabelHistogram.size === 3 &&
-        Array.from(cardLabelHistogram.values()).includes(3 - jokerCount)
-    ) {
+    if (cardHistogram.size === 3 && Array.from(cardHistogram.values()).includes(3 - jokerCount)) {
         return HandType.THREE_OF_A_KIND;
     }
 
-    if (cardLabelHistogram.size === 3) {
+    if (cardHistogram.size === 3) {
         return HandType.TWO_PAIR;
     }
 
-    if (cardLabelHistogram.size === 4) {
+    if (cardHistogram.size === 4) {
         return HandType.ONE_PAIR;
     }
 
@@ -126,12 +120,16 @@ function handComparator(handA: Hand, handB: Hand, allowJokers = false): number {
     );
 }
 
+function countTotalWinnings(sortedHands: Hand[]): number {
+    return sortedHands.reduce((winnings, { bid }, index) => winnings + bid * (index + 1), 0);
+}
+
 export function partOne(): number {
     const sortedHands = [...HANDS].sort(handComparator);
-    return sortedHands.reduce((winnings, { bid }, index) => winnings + bid * (index + 1), 0);
+    return countTotalWinnings(sortedHands);
 }
 
 export function partTwo(): number {
     const sortedHands = [...HANDS].sort((handA, handB) => handComparator(handA, handB, true));
-    return sortedHands.reduce((winnings, { bid }, index) => winnings + bid * (index + 1), 0);
+    return countTotalWinnings(sortedHands);
 }
