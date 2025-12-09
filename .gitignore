@@ -1,0 +1,8 @@
+# IDE files
+.idea
+
+# Lock files
+bun.lockb
+
+# Dependency directories
+node_modules
