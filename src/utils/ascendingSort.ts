@@ -1,0 +1,3 @@
+export function ascendingSort(a: number, b: number): number {
+    return a - b;
+}
