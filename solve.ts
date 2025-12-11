@@ -2,13 +2,16 @@ import { readdirSync } from 'fs';
 import { join } from 'path';
 import select from '@inquirer/select';
 
+import { descendingSort } from '#src/utils';
+
 let [, , year, day, part] = process.argv;
 
-const LOCALE = 'en-GB';
-
-function descendingSort(a: number, b: number): number {
-    return b - a;
-}
+const SOURCE_DIRECTORY = 'src';
+const SOURCE_MODULE = '#src';
+const SOLUTION_FILE_NAME = 'main.ts';
+const PADDED_DAY_LENGTH = 2;
+const FORMATTING_LOCALE = 'en-GB';
+const STRING_ZERO = '0';
 
 function getNumericSubdirectories(parentDirectoryPath: string): number[] {
     return readdirSync(parentDirectoryPath, { withFileTypes: true })
@@ -38,7 +41,7 @@ function getCurrentTimestamp(): number {
 }
 
 function formatTimestamp(timestamp: number): string {
-    return timestamp.toLocaleString(LOCALE, {
+    return timestamp.toLocaleString(FORMATTING_LOCALE, {
         minimumFractionDigits: 4,
         maximumFractionDigits: 4,
     });
@@ -59,17 +62,19 @@ function attemptSolution(targetPart: number, solution?: () => number | string): 
 
 year ??= await select({
     message: 'Select year',
-    choices: getNumericSubdirectories('src').map(String),
+    choices: getNumericSubdirectories(SOURCE_DIRECTORY).map(String),
 });
 
 day ??= await select({
     message: 'Select day',
-    choices: getNumericSubdirectories(join('src', year)).map(String),
+    choices: getNumericSubdirectories(join(SOURCE_DIRECTORY, year)).map(String),
 });
 
-part ??= '0';
+part ??= STRING_ZERO;
 
-const { partOne, partTwo } = await import(join('#src', year, day.padStart(2, '0'), 'main.ts'));
+const { partOne, partTwo } = await import(
+    join(SOURCE_MODULE, year, day.padStart(PADDED_DAY_LENGTH, STRING_ZERO), SOLUTION_FILE_NAME),
+);
 
 attemptSolution(1, partOne);
 attemptSolution(2, partTwo);
