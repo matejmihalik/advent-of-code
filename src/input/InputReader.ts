@@ -4,20 +4,22 @@ import { format, join } from 'path';
 
 import { ContentReader } from './ContentReader';
 
-const FILE_ENCODING = 'utf-8';
+const INPUT_DIRECTORY = 'input';
+const INPUT_EXTENSION = 'txt';
+const INPUT_ENCODING = 'utf-8';
 
 export class InputReader extends ContentReader {
     constructor(solutionDirectory: string) {
         const [, projectRoot, , year, day] = solutionDirectory.match(
-            /(?<projectRoot>.*?)(?<folder>\w+)\/(?<year>\w+)\/(?<day>\w+)$/,
+            /(?<projectRoot>.*?)(?<sourceDirectory>\w+)\/(?<year>\w+)\/(?<day>\w+)$/,
         ) ?? [];
 
         const inputFilePath = format({
-            dir: join(projectRoot, 'input', year),
+            dir: join(projectRoot, INPUT_DIRECTORY, year),
             name: day,
-            ext: 'txt',
+            ext: INPUT_EXTENSION,
         });
-        const inputFileContent = readFileSync(inputFilePath, FILE_ENCODING);
+        const inputFileContent = readFileSync(inputFilePath, INPUT_ENCODING);
         super(inputFileContent);
     }
 
