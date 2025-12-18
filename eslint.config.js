@@ -39,6 +39,7 @@ export default tsEsLint.config(
             '@stylistic/max-len': ['error', {
                 code: 100,
                 tabWidth: 4,
+                ignoreRegExpLiterals: true,
             }],
             '@stylistic/object-curly-newline': ['error', {
                 consistent: true,
