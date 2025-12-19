@@ -44,7 +44,7 @@ function deliverPresents(instructions: Instruction[]): Set<number> {
     return instructions.reduce((visitedHouses, instruction) => {
         currentHouse = moveSanta(currentHouse, instruction);
         return visitedHouses.add(pairSigned(currentHouse));
-    }, new Set<number>([pairSigned(STARTING_HOUSE)]));
+    }, new Set([pairSigned(STARTING_HOUSE)]));
 }
 
 export function partOne(): number {
