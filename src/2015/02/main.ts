@@ -9,8 +9,8 @@ type Gift = [length: number, width: number, height: number];
 
 const DIMENSION_SEPARATOR = 'x';
 
-function parseGift(rawGift: string): Gift {
-    const [length, width, height] = rawGift.split(DIMENSION_SEPARATOR).map(Number);
+function parseGift(gift: string): Gift {
+    const [length, width, height] = gift.split(DIMENSION_SEPARATOR).map(Number);
     return [length, width, height];
 }
 

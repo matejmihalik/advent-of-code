@@ -15,9 +15,9 @@ type Scoreboard = Map<string, number>;
 
 const RACE_DURATION = 2503;
 
-function parseReindeer(rawReindeer: string): Reindeer {
+function parseReindeer(reindeer: string): Reindeer {
     const [, name, speed, flyingPhaseDuration, restingPhaseDuration]
-        = rawReindeer.match(
+        = reindeer.match(
             /^(?<name>\w+) can fly (?<speed>\d+) km\/s for (?<flyingPhaseDuration>\d+) seconds, but then must rest for (?<restingPhaseDuration>\w+) seconds.$/,
         ) ?? [];
 

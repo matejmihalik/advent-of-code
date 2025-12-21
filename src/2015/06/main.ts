@@ -29,8 +29,8 @@ type LightSwitchFunction = (lightBrightness: number, operation: Operation) => nu
 
 const GRID_SIZE = 1000;
 
-function parseInstruction(rawInstruction: string): Instruction {
-    const [, operation, startRow, startColumn, endRow, endColumn] = rawInstruction.match(
+function parseInstruction(instruction: string): Instruction {
+    const [, operation, startRow, startColumn, endRow, endColumn] = instruction.match(
         /^(?<operation>.*) (?<startRow>\d+),(?<startColumn>\d+) through (?<endRow>\d+),(?<endColumn>\d+)$/,
     ) ?? [];
 
