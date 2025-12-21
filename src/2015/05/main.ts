@@ -9,7 +9,7 @@ const STRINGS = new InputReader(import.meta.dirname).readAsLines();
 
 export function partOne(): number {
     return conditionalCount(STRINGS, (string) => {
-        const hasThreeVowels = /(?:.*?[aeiou].*?){3}/.test(string);
+        const hasThreeVowels = (string.match(/[aeiou]/g) ?? []).length >= 3;
         const containsDoubleLetter = /(?<letter>[a-z])\k<letter>/.test(string);
         const containsForbiddenStrings = /ab|cd|pq|xy/.test(string);
 
