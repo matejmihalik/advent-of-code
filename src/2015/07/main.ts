@@ -25,7 +25,7 @@ function createCircuit(): Circuit {
 function traceSignal(circuit: Circuit, signal: string): number {
     const numericSignal = Number(signal);
 
-    if (!Number.isNaN((numericSignal))) {
+    if (Number.isInteger((numericSignal))) {
         return numericSignal;
     }
 
@@ -41,7 +41,7 @@ function traceSignal(circuit: Circuit, signal: string): number {
 
     const numericSignalInput = Number(signalInput);
 
-    if (!Number.isNaN((numericSignalInput))) {
+    if (Number.isInteger((numericSignalInput))) {
         circuit.set(signal, numericSignalInput);
         return numericSignalInput;
     }
