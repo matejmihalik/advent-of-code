@@ -1,6 +1,6 @@
 {
   "name": "advent-of-code",
-  "version": "2015.13.2",
+  "version": "2015.14.2",
   "license": "MIT",
   "type": "module",
   "imports": {
