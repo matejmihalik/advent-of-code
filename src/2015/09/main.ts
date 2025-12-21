@@ -19,14 +19,14 @@ function setLocationDistance(
     destination: Node,
     distance: Distance,
 ): void {
-    let originDestinations = graph.get(origin);
+    let originDistances = graph.get(origin);
 
-    if (!originDestinations) {
-        originDestinations = new Map();
-        graph.set(origin, originDestinations);
+    if (!originDistances) {
+        originDistances = new Map();
+        graph.set(origin, originDistances);
     }
 
-    originDestinations.set(destination, distance);
+    originDistances.set(destination, distance);
 }
 
 const LOCATION_GRAPH = ROUTES.reduce<Graph>((locationGraph, route) => {
@@ -42,13 +42,13 @@ const LOCATION_GRAPH = ROUTES.reduce<Graph>((locationGraph, route) => {
 }, new Map());
 
 export function partOne(): number {
-    const fitnessFunction: DistanceFitnessFunction = (distance) => -distance;
-    const bestOpenPath = new BestOpenPath(LOCATION_GRAPH, fitnessFunction);
+    const preferMinimumDistance: DistanceFitnessFunction = (distance) => -distance;
+    const bestOpenPath = new BestOpenPath(LOCATION_GRAPH, preferMinimumDistance);
     return bestOpenPath.findBestDistance();
 }
 
 export function partTwo(): number {
-    const fitnessFunction: DistanceFitnessFunction = (distance) => distance;
-    const bestOpenPath = new BestOpenPath(LOCATION_GRAPH, fitnessFunction);
+    const preferMaximumDistance: DistanceFitnessFunction = (distance) => distance;
+    const bestOpenPath = new BestOpenPath(LOCATION_GRAPH, preferMaximumDistance);
     return bestOpenPath.findBestDistance();
 }
