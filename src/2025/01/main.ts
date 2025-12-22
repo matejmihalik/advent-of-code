@@ -60,25 +60,25 @@ function countZeroClicksForRotation(
     updatedDialPosition: number,
     rotation: number,
 ) {
-    const currentZeroClicks = Math.floor(Math.abs(rotation) / DIAL_SIZE);
+    const fullDialRotations = Math.floor(Math.abs(rotation) / DIAL_SIZE);
 
     if (originalDialPosition === 0) {
-        return currentZeroClicks;
+        return fullDialRotations;
     }
 
     if (updatedDialPosition === 0) {
-        return currentZeroClicks + 1;
+        return fullDialRotations + 1;
     }
 
     if (rotation < 0 && updatedDialPosition > originalDialPosition) {
-        return currentZeroClicks + 1;
+        return fullDialRotations + 1;
     }
 
     if (rotation > 0 && updatedDialPosition < originalDialPosition) {
-        return currentZeroClicks + 1;
+        return fullDialRotations + 1;
     }
 
-    return currentZeroClicks;
+    return fullDialRotations;
 }
 
 export function partTwo(): number {
