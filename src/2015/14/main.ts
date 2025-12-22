@@ -67,8 +67,7 @@ function getLeadingReindeers(standings: Scoreboard): string[] {
 
         return leaders;
     },
-    [],
-    );
+    []);
 }
 
 function scoreReindeers(scoreboard: Scoreboard, secondsElapsed: number): void {
