@@ -47,7 +47,7 @@ export class ContentReader {
         return this.readAsLines(Number);
     }
 
-    readAsGrid<T extends string>(transform?: (cell: string) => T): T[][] {
+    readAsGrid<T>(transform?: (cell: string) => T): T[][] {
         return this.readAsLines((row) => {
             const rowCells = row.split('');
 

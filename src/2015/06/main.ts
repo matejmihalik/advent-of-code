@@ -65,8 +65,7 @@ function sumLightGridBrightness(grid: LightGrid): number {
     return grid.reduce((totalBrightness, row) =>
         totalBrightness
         + row.reduce((rowBrightness, lightBrightness) => rowBrightness + lightBrightness, 0),
-    0,
-    );
+    0);
 }
 
 function lightUpGrid(lightSwitchFunction: LightSwitchFunction): number {
