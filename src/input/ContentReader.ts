@@ -43,6 +43,10 @@ export class ContentReader {
         return lines;
     }
 
+    readAsUntrimmedLines(): string[] {
+        return this.#content.trimEnd().split(EOL);
+    }
+
     readAsNumbers(): number[] {
         return this.readAsLines(Number);
     }
