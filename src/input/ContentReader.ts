@@ -44,7 +44,7 @@ export class ContentReader {
     }
 
     readAsUntrimmedLines(): string[] {
-        return this.#content.trimEnd().split(EOL);
+        return this.#content.split(EOL).filter(Boolean);
     }
 
     readAsNumbers(): number[] {
