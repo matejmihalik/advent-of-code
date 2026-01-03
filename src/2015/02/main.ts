@@ -19,10 +19,7 @@ const GIFTS = new InputReader(import.meta.dirname).readAsLines(parseGift);
 function calculatePaperNeeded([length, width, height]: Gift): number {
     const sideAreas = [length * width, length * height, width * height];
 
-    const areaPaper = sideAreas.reduce(
-        (totalArea, sideArea) => totalArea + sideArea * 2,
-        0,
-    );
+    const areaPaper = sideAreas.reduce((totalArea, sideArea) => totalArea + sideArea * 2, 0);
     const sparePaper = Math.min(...sideAreas);
 
     return areaPaper + sparePaper;
@@ -38,14 +35,10 @@ export function partOne(): number {
 function calculateRibbonNeeded(dimensions: Gift): number {
     const [, ...smallerDimensions] = dimensions.sort(descendingSort);
 
-    const ribbonLength = smallerDimensions.reduce(
-        (totalLength, dimension) => totalLength + dimension * 2,
-        0,
-    );
-    const bowLength = dimensions.reduce(
-        (totalLength, dimension) => totalLength * dimension,
-        1,
-    );
+    const ribbonLength = smallerDimensions.reduce((totalLength, dimension) =>
+        totalLength + dimension * 2,
+    0);
+    const bowLength = dimensions.reduce((totalLength, dimension) => totalLength * dimension, 1);
 
     return ribbonLength + bowLength;
 }

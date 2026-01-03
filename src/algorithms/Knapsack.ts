@@ -1,6 +1,5 @@
 import { memoize } from '#src/utils';
 
-type Weight = number;
 type Quantity = number;
 type Limit = number;
 type Capacity = number;
@@ -10,18 +9,18 @@ export type EvaluationFunction = (combination: Combination) => Value;
 type CombinationFilter = (combination: Combination) => boolean;
 
 export class Knapsack {
-    #itemWeights: Weight[];
-    #itemLimit: Limit;
     #totalCapacity: Capacity;
+    #items: Capacity[];
+    #itemLimit: Limit;
 
-    constructor(itemWeights: Weight[], itemLimit: Limit, totalCapacity: Capacity) {
-        this.#itemWeights = itemWeights;
-        this.#itemLimit = itemLimit;
+    constructor(totalCapacity: Capacity, items: Capacity[], itemLimit = 1) {
         this.#totalCapacity = totalCapacity;
+        this.#items = items;
+        this.#itemLimit = itemLimit;
     }
 
-    #calculateSingleItemCombination(itemWeight: Weight, leftoverCapacity: Capacity): Combination[] {
-        const itemAmountToFillCapacity = leftoverCapacity / itemWeight;
+    #calculateSingleItemCombination(item: Capacity, leftoverCapacity: Capacity): Combination[] {
+        const itemAmountToFillCapacity = leftoverCapacity / item;
 
         if (
             Number.isInteger(itemAmountToFillCapacity)
@@ -35,11 +34,11 @@ export class Knapsack {
 
     #findAllSubCombinations = memoize(
         (
-            [currentItemWeight, ...otherItemWeights]: Weight[],
+            [currentItem, ...otherItems]: Capacity[],
             leftoverCapacity: Capacity,
         ): Combination[] => {
-            if (!otherItemWeights.length) {
-                return this.#calculateSingleItemCombination(currentItemWeight, leftoverCapacity);
+            if (!otherItems.length) {
+                return this.#calculateSingleItemCombination(currentItem, leftoverCapacity);
             }
 
             const combinations: Combination[] = [];
@@ -49,14 +48,14 @@ export class Knapsack {
                 currentItemAmount <= this.#itemLimit;
                 currentItemAmount++
             ) {
-                const currentlyAllocatedCapacity = currentItemAmount * currentItemWeight;
+                const currentlyAllocatedCapacity = currentItemAmount * currentItem;
 
                 if (currentlyAllocatedCapacity > leftoverCapacity) {
                     break;
                 }
 
                 const subCombinations = this.#findAllSubCombinations(
-                    otherItemWeights,
+                    otherItems,
                     leftoverCapacity - currentlyAllocatedCapacity,
                 ).map((combination) => [currentItemAmount, ...combination]);
                 combinations.push(...subCombinations);
@@ -68,7 +67,7 @@ export class Knapsack {
 
     findAllCombinations(combinationFilter?: CombinationFilter): Combination[] {
         const allCombinations = this.#findAllSubCombinations(
-            this.#itemWeights,
+            this.#items,
             this.#totalCapacity,
         );
 
@@ -84,9 +83,8 @@ export class Knapsack {
         combinationFilter?: CombinationFilter,
     ): Value {
         const allCombinations = this.findAllCombinations(combinationFilter);
-        return allCombinations.reduce(
-            (bestValue, combination) => Math.max(bestValue, evaluationFunction(combination)),
-            0,
-        );
+        return allCombinations.reduce((bestValue, combination) =>
+            Math.max(bestValue, evaluationFunction(combination)),
+        0);
     }
 }

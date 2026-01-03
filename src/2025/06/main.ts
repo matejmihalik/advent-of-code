@@ -57,8 +57,7 @@ const performOperationOnRows: ProblemSolver = (operation, operationIndex) =>
     OPERANDS.reduce((result, operandLine) => {
         const operand = Number(operandLine[operationIndex]);
         return performOperation(result, operand, operation);
-    },
-    getBaseOperand(operation));
+    }, getBaseOperand(operation));
 
 function sumProblems(problemSolver: ProblemSolver): number {
     return OPERATIONS.reduce((resultSum, operation, operationIndex) =>

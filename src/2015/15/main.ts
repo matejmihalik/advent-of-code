@@ -49,14 +49,14 @@ const calculateCookieScore: EvaluationFunction = (recipe) =>
     }, 1);
 
 export function partOne(): number {
-    const knapsack = new Knapsack(INGREDIENT_WEIGHTS, INGREDIENT_LIMIT, INGREDIENT_LIMIT);
+    const knapsack = new Knapsack(INGREDIENT_LIMIT, INGREDIENT_WEIGHTS, INGREDIENT_LIMIT);
     return knapsack.findBestValue(calculateCookieScore);
 }
 
 export function partTwo(): number {
     const calorieTarget = 500;
 
-    const knapsack = new Knapsack(INGREDIENT_WEIGHTS, INGREDIENT_LIMIT, INGREDIENT_LIMIT);
+    const knapsack = new Knapsack(INGREDIENT_LIMIT, INGREDIENT_WEIGHTS, INGREDIENT_LIMIT);
     return knapsack.findBestValue(calculateCookieScore, (recipe) =>
         calculatePropertyScore(recipe, CALORIE_PROPERTY) === calorieTarget);
 }

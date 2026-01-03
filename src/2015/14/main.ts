@@ -46,28 +46,17 @@ function calculateReindeerDistance(
 }
 
 export function partOne(): number {
-    const finalStandings = REINDEERS.map((reindeer) =>
-        calculateReindeerDistance(reindeer, RACE_DURATION),
-    );
-
-    return Math.max(...finalStandings);
+    return REINDEERS.reduce((maximumDistance, reindeer) => {
+        const reindeerDistance = calculateReindeerDistance(reindeer, RACE_DURATION);
+        return Math.max(maximumDistance, reindeerDistance);
+    }, 0);
 }
 
 function getLeadingReindeers(standings: Scoreboard): string[] {
-    return standings.entries().reduce<string[]>((leaders, [reindeer, currentReindeerDistance]) => {
-        const topDistance = standings.get(leaders[0]) ?? 0;
-
-        if (currentReindeerDistance > topDistance) {
-            return [reindeer];
-        }
-
-        if (currentReindeerDistance === topDistance) {
-            leaders.push(reindeer);
-        }
-
-        return leaders;
-    },
-    []);
+    const maximumDistance = Math.max(...standings.values());
+    return Array.from(standings.keys().filter((reindeer) =>
+        standings.get(reindeer) === maximumDistance,
+    ));
 }
 
 function scoreReindeers(scoreboard: Scoreboard, secondsElapsed: number): void {

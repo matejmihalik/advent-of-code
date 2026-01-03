@@ -27,8 +27,7 @@ export function partOne(): number {
         );
 
         return totalFreshIds + Number(isIdFresh);
-    },
-    0);
+    }, 0);
 }
 
 function findFirstOverlappingRangeIndex(
