@@ -21,7 +21,7 @@ function countNeighbouringRolls(grid: Grid, row: number, column: number): number
     for (let rowDelta = -1; rowDelta <= 1; rowDelta++) {
         for (let columnDelta = -1; columnDelta <= 1; columnDelta++) {
             if (rowDelta || columnDelta) {
-                const neighbouringCell = grid[row + rowDelta]?.[column + columnDelta] ?? false;
+                const neighbouringCell = Boolean(grid[row + rowDelta]?.[column + columnDelta]);
                 neighbouringRolls += Number(neighbouringCell);
             }
         }
