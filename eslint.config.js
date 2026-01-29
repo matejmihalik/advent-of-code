@@ -61,6 +61,7 @@ export default tsEsLint.config(
             '@typescript-eslint/consistent-type-imports': ['error', {
                 fixStyle: 'inline-type-imports',
             }],
+            '@typescript-eslint/no-dynamic-delete': 'off',
             '@typescript-eslint/no-shadow': 'error',
             'import-x/no-named-as-default-member': 'off',
             'sort-imports': ['error', {

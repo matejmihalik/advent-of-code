@@ -1,3 +1,5 @@
+export { AStar } from './AStar';
+export type { HeuristicFunction, StateExplorationFunction } from './Search';
 export { BestOpenPath } from './BestOpenPath';
 export { HeldKarp } from './HeldKarp';
 export {
